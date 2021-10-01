@@ -3,10 +3,12 @@
 const todoInput = document.querySelector('.todo-input')
 const todoButton = document.querySelector('.todo-button')
 const todoList = document.querySelector('.todo-list')
+const filterOption = document.querySelector('.filter-todo')
 
 // Event Listeners
 todoButton.addEventListener('click', addTodo)
 todoList.addEventListener('click', deleteAndCheck)
+filterOption.addEventListener('click', filterTODO)
 
 // Functions
 
@@ -26,10 +28,12 @@ function addTodo(event) {
     newTodoElement.classList.add('todo-item')
     todoElement.appendChild(newTodoElement)
 
+    // Clear TO DO input value
+    todoInput.value = ''
 
     // Adding the CheckMark Button
     const completeButton = document.createElement('button')
-    completeButton.innerHTML = '<i class="fas fa-check"></i>'
+    completeButton.innerHTML = `<i class="fas fa-check"></i>`
     completeButton.classList.add('complete-btn')
     todoElement.appendChild(completeButton)
 
@@ -42,21 +46,20 @@ function addTodo(event) {
     // Appending the list element to the list
     todoList.appendChild(todoElement)
 
-    // Clear TO DO input value
-    todoInput.value = ''
+
 }
 
 function deleteAndCheck(event) {
-    console.log(event)
     const item = event.target
 
     // Delete a To do
     if (item.classList[0] === 'delete-btn') {
         const todoElement = item.parentElement
         todoElement.classList.add('fall')
-        todoElement.addEventListener('transitionend', () => {
+        // Wait until the falling transition end then remove todoElement
+        todoElement.addEventListener('transitionend', function () {
             todoElement.remove()
-        }, null)
+        })
     }
 
     // CHECK MARK
@@ -64,4 +67,34 @@ function deleteAndCheck(event) {
         const todoElement = item.parentElement
         todoElement.classList.toggle('completed')
     }
+}
+
+function filterTODO(event) {
+    const [head, ...todos] = todoList.childNodes;
+    console.log('First item :', head)
+    console.log('The remaining items :', todos)
+
+    todos.forEach(function (todo) {
+        switch (event.target.value) {
+            case "all" :
+                todo.style.display = 'flex'
+                break
+            case "completed":
+                if(todo.classList.contains('completed')) {
+                    todo.style.display = 'flex'
+                }
+                else {
+                    todo.style.display = 'none'
+                }
+                break
+            case "uncompleted":
+                if(!todo.classList.contains('completed')) {
+                    todo.style.display = 'flex'
+                }
+                else {
+                    todo.style.display = 'none'
+                }
+                break
+        }
+    })
 }
