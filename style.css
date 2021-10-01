@@ -23,10 +23,12 @@ header, form {
     align-items: center;
 }
 
-form input, form button {
+form input,
+form button {
     padding: 0.5rem;
     font-size: 1.2rem;
     border: none;
+    height: 3rem;
     background: white;
 }
 
@@ -37,6 +39,8 @@ form input {
 form button {
     color: #d88771;
     background: white;
+    height: 3rem;
+    width: 3rem;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -112,7 +116,8 @@ select {
     border: none;
     outline: none;
     color: #ff6f47;
-    width: 10rem;
+    width: 12rem;
+    height: 3rem;
     cursor: pointer;
     padding: 1rem;
 }
